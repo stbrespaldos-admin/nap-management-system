@@ -105,7 +105,6 @@ export class AuthService {
       }
     }
     return null;
-    return null;
   }
 
   isTokenValid(token: string): boolean {
