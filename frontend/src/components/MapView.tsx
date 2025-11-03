@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { NAP, MapViewProps, MarkerInfo } from '../types/nap';
 
-const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || 'AIzaSyDkxqkgM8DEjcMqF4N2-1YTXE8s2PpnjGU';
+const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || 'AIzaSyBOhbKrQZPXOWAN4kEOMzLMDpIwGv6U9WA';
 
 // Default center for Colombia (approximate center)
 const DEFAULT_CENTER = { lat: 4.5709, lng: -74.2973 };
