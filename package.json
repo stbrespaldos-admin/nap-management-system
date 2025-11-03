@@ -2,9 +2,9 @@
   "name": "nap-management-system",
   "version": "1.0.0",
   "description": "Sistema de Gestión de NAPs con Google Sheets",
-  "main": "server.js",
+  "main": "server-simple.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server-simple.js",
     "build": "npm install --production && cd frontend && npm install && npm run build",
     "postbuild": "npm install --production",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
