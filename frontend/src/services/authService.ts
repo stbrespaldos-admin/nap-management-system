@@ -95,14 +95,16 @@ export class AuthService {
 
   getStoredUser(): User | null {
     const userData = localStorage.getItem('user_data');
-    if (userData) {
+    if (userData && userData !== 'undefined' && userData !== 'null') {
       try {
         return JSON.parse(userData);
       } catch (error) {
         console.error('Error parsing stored user data:', error);
         localStorage.removeItem('user_data');
+        localStorage.removeItem('auth_token');
       }
     }
+    return null;
     return null;
   }
 
