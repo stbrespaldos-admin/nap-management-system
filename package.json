@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "build": "npm install --production && cd frontend && npm install && npm run build",
+    "postbuild": "npm install --production",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && node server-sheets.js",
     "client": "cd frontend && npm start",
