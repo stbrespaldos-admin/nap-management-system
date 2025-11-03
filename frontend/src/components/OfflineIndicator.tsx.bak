@@ -1,0 +1,127 @@
+import React from 'react';
+import { useOnlineStatus } from '../hooks/usePWA';
+
+interface OfflineIndicatorProps {
+  className?: string;
+  showWhenOnline?: boolean;
+}
+
+const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
+  className = '',
+  showWhenOnline = false
+}) => {
+  const isOnline = useOnlineStatus();
+
+  // Solo mostrar cuando está offline, o cuando showWhenOnline es true
+  if (isOnline && !showWhenOnline) {
+    return null;
+  }
+
+  return (
+    <div className={`offline-indicator ${isOnline ? 'online' : 'offline'} ${className}`}>
+      <div className="offline-content">
+        <div className="connection-dot" />
+        <span className="connection-text">
+          {isOnline ? 'Conectado' : 'Sin conexión'}
+        </span>
+      </div>
+      
+      <style>{`
+        .offline-indicator {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: white;
+          border-radius: 20px;
+          padding: 8px 16px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          border: 1px solid #e2e8f0;
+          z-index: 1000;
+          transition: all 0.3s ease;
+          animation: slideIn 0.3s ease-out;
+        }
+        
+        .offline-indicator.offline {
+          background: #fed7d7;
+          border-color: #fc8181;
+          color: #c53030;
+        }
+        
+        .offline-indicator.online {
+          background: #c6f6d5;
+          border-color: #68d391;
+          color: #2f855a;
+        }
+        
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        .offline-content {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .connection-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+        
+        .offline .connection-dot {
+          background: #e53e3e;
+          animation: pulse 1.5s infinite;
+        }
+        
+        .online .connection-dot {
+          background: #38a169;
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(0.8);
+          }
+        }
+        
+        .connection-text {
+          font-size: 14px;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+        
+        @media (max-width: 480px) {
+          .offline-indicator {
+            top: 16px;
+            right: 16px;
+            padding: 6px 12px;
+          }
+          
+          .connection-text {
+            font-size: 12px;
+          }
+          
+          .connection-dot {
+            width: 6px;
+            height: 6px;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default OfflineIndicator;

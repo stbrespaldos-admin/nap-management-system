@@ -1,0 +1,207 @@
+import React, { useState } from 'react';
+import { usePWA } from '../hooks/usePWA';
+
+interface PWAUpdateNotificationProps {
+  className?: string;
+  onUpdate?: () => void;
+  onDismiss?: () => void;
+}
+
+const PWAUpdateNotification: React.FC<PWAUpdateNotificationProps> = ({
+  className = '',
+  onUpdate,
+  onDismiss
+}) => {
+  const { updateAvailable, updateApp } = usePWA();
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  // No mostrar si no hay actualización disponible o fue descartada
+  if (!updateAvailable || isDismissed) {
+    return null;
+  }
+
+  const handleUpdate = async () => {
+    setIsUpdating(true);
+    try {
+      await updateApp();
+      onUpdate?.();
+    } catch (error) {
+      console.error('Error durante la actualización:', error);
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    onDismiss?.();
+  };
+
+  return (
+    <div className={`pwa-update-notification ${className}`}>
+      <div className="pwa-update-content">
+        <div className="pwa-update-icon">
+          🔄
+        </div>
+        
+        <div className="pwa-update-text">
+          <h3>Actualización Disponible</h3>
+          <p>
+            Hay una nueva versión de la aplicación disponible. 
+            Actualiza para obtener las últimas mejoras.
+          </p>
+        </div>
+        
+        <div className="pwa-update-actions">
+          <button
+            onClick={handleUpdate}
+            disabled={isUpdating}
+            className="pwa-update-button primary"
+          >
+            {isUpdating ? 'Actualizando...' : 'Actualizar'}
+          </button>
+          
+          <button
+            onClick={handleDismiss}
+            className="pwa-update-button secondary"
+          >
+            Después
+          </button>
+        </div>
+      </div>
+      
+      <style>{`
+        .pwa-update-notification {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          right: 20px;
+          max-width: 500px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+          border: 1px solid #e2e8f0;
+          border-left: 4px solid #667eea;
+          z-index: 1001;
+          animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .pwa-update-content {
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        
+        .pwa-update-icon {
+          font-size: 32px;
+          flex-shrink: 0;
+          animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        .pwa-update-text {
+          flex: 1;
+          min-width: 0;
+        }
+        
+        .pwa-update-text h3 {
+          margin: 0 0 8px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #2d3748;
+        }
+        
+        .pwa-update-text p {
+          margin: 0;
+          font-size: 14px;
+          color: #718096;
+          line-height: 1.4;
+        }
+        
+        .pwa-update-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        
+        .pwa-update-button {
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 500;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          min-width: 100px;
+        }
+        
+        .pwa-update-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        
+        .pwa-update-button.primary {
+          background: #667eea;
+          color: white;
+        }
+        
+        .pwa-update-button.primary:hover:not(:disabled) {
+          background: #5a67d8;
+        }
+        
+        .pwa-update-button.secondary {
+          background: transparent;
+          color: #718096;
+          border: 1px solid #e2e8f0;
+        }
+        
+        .pwa-update-button.secondary:hover {
+          background: #f7fafc;
+        }
+        
+        @media (max-width: 480px) {
+          .pwa-update-notification {
+            left: 16px;
+            right: 16px;
+            top: 16px;
+          }
+          
+          .pwa-update-content {
+            padding: 16px;
+            flex-direction: column;
+            text-align: center;
+          }
+          
+          .pwa-update-actions {
+            flex-direction: row;
+            width: 100%;
+          }
+          
+          .pwa-update-button {
+            flex: 1;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default PWAUpdateNotification;

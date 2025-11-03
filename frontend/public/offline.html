@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#667eea">
+  <title>Sin Conexión - Sistema de Gestión de NAPs</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .offline-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 60px 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      animation: slideUp 0.6s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .offline-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 30px;
+      background: #f8f9fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    h1 {
+      color: #2d3748;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .subtitle {
+      color: #4a5568;
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+    
+    .description {
+      color: #718096;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 200px;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #5a67d8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+    
+    .btn-secondary:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .status {
+      margin-top: 30px;
+      padding: 16px;
+      background: #f7fafc;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .status-text {
+      color: #4a5568;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .connection-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e53e3e;
+      animation: blink 1.5s infinite;
+    }
+    
+    .indicator-dot.online {
+      background: #38a169;
+      animation: none;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.3; }
+    }
+    
+    @media (max-width: 480px) {
+      .offline-container {
+        padding: 40px 24px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+      }
+      
+      .btn {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">
+      📡
+    </div>
+    
+    <h1>Sin Conexión</h1>
+    <p class="subtitle">No se pudo conectar al servidor</p>
+    
+    <p class="description">
+      Parece que no tienes conexión a internet. Algunas funciones pueden estar limitadas 
+      hasta que se restablezca la conexión.
+    </p>
+    
+    <div class="actions">
+      <button class="btn btn-primary" onclick="retryConnection()">
+        Reintentar Conexión
+      </button>
+      
+      <button class="btn btn-secondary" onclick="goOffline()">
+        Continuar Sin Conexión
+      </button>
+    </div>
+    
+    <div class="status">
+      <div class="status-text">Estado de la conexión:</div>
+      <div class="connection-indicator">
+        <span class="indicator-dot" id="connectionDot"></span>
+        <span id="connectionStatus">Sin conexión</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Verificar estado de conexión
+    function updateConnectionStatus() {
+      const dot = document.getElementById('connectionDot');
+      const status = document.getElementById('connectionStatus');
+      
+      if (navigator.onLine) {
+        dot.classList.add('online');
+        status.textContent = 'Conectado';
+      } else {
+        dot.classList.remove('online');
+        status.textContent = 'Sin conexión';
+      }
+    }
+    
+    // Reintentar conexión
+    function retryConnection() {
+      if (navigator.onLine) {
+        window.location.href = '/';
+      } else {
+        // Intentar recargar la página
+        window.location.reload();
+      }
+    }
+    
+    // Continuar en modo offline
+    function goOffline() {
+      // Intentar ir a la página principal (puede tener funcionalidad offline)
+      window.location.href = '/';
+    }
+    
+    // Escuchar cambios en el estado de conexión
+    window.addEventListener('online', () => {
+      updateConnectionStatus();
+      // Auto-redirigir cuando se recupere la conexión
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
+    });
+    
+    window.addEventListener('offline', updateConnectionStatus);
+    
+    // Verificar estado inicial
+    updateConnectionStatus();
+    
+    // Verificar conexión periódicamente
+    setInterval(() => {
+      updateConnectionStatus();
+    }, 5000);
+  </script>
+</body>
+</html>

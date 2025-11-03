@@ -1,0 +1,204 @@
+import React, { useState } from 'react';
+import { usePWA } from '../hooks/usePWA';
+
+interface PWAInstallPromptProps {
+  className?: string;
+  onInstall?: (success: boolean) => void;
+  onDismiss?: () => void;
+}
+
+const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
+  className = '',
+  onInstall,
+  onDismiss
+}) => {
+  const { canInstall, isInstalled, install } = usePWA();
+  const [isInstalling, setIsInstalling] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  // No mostrar si ya está instalada, no se puede instalar, o fue descartada
+  if (isInstalled || !canInstall || isDismissed) {
+    return null;
+  }
+
+  const handleInstall = async () => {
+    setIsInstalling(true);
+    try {
+      const success = await install();
+      onInstall?.(success);
+      if (!success) {
+        setIsInstalling(false);
+      }
+    } catch (error) {
+      console.error('Error durante la instalación:', error);
+      setIsInstalling(false);
+      onInstall?.(false);
+    }
+  };
+
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    onDismiss?.();
+  };
+
+  return (
+    <div className={`pwa-install-prompt ${className}`}>
+      <div className="pwa-install-content">
+        <div className="pwa-install-icon">
+          📱
+        </div>
+        
+        <div className="pwa-install-text">
+          <h3>Instalar Aplicación</h3>
+          <p>
+            Instala NAP Management en tu dispositivo para acceso rápido 
+            y funcionalidad offline.
+          </p>
+        </div>
+        
+        <div className="pwa-install-actions">
+          <button
+            onClick={handleInstall}
+            disabled={isInstalling}
+            className="pwa-install-button primary"
+          >
+            {isInstalling ? 'Instalando...' : 'Instalar'}
+          </button>
+          
+          <button
+            onClick={handleDismiss}
+            className="pwa-install-button secondary"
+          >
+            Ahora no
+          </button>
+        </div>
+      </div>
+      
+      <style>{`
+        .pwa-install-prompt {
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          right: 20px;
+          max-width: 400px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+          border: 1px solid #e2e8f0;
+          z-index: 1000;
+          animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .pwa-install-content {
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        
+        .pwa-install-icon {
+          font-size: 32px;
+          flex-shrink: 0;
+        }
+        
+        .pwa-install-text {
+          flex: 1;
+          min-width: 0;
+        }
+        
+        .pwa-install-text h3 {
+          margin: 0 0 8px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #2d3748;
+        }
+        
+        .pwa-install-text p {
+          margin: 0;
+          font-size: 14px;
+          color: #718096;
+          line-height: 1.4;
+        }
+        
+        .pwa-install-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        
+        .pwa-install-button {
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 500;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          min-width: 100px;
+        }
+        
+        .pwa-install-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+        
+        .pwa-install-button.primary {
+          background: #667eea;
+          color: white;
+        }
+        
+        .pwa-install-button.primary:hover:not(:disabled) {
+          background: #5a67d8;
+        }
+        
+        .pwa-install-button.secondary {
+          background: transparent;
+          color: #718096;
+          border: 1px solid #e2e8f0;
+        }
+        
+        .pwa-install-button.secondary:hover {
+          background: #f7fafc;
+        }
+        
+        @media (max-width: 480px) {
+          .pwa-install-prompt {
+            left: 16px;
+            right: 16px;
+            bottom: 16px;
+          }
+          
+          .pwa-install-content {
+            padding: 16px;
+            flex-direction: column;
+            text-align: center;
+          }
+          
+          .pwa-install-actions {
+            flex-direction: row;
+            width: 100%;
+          }
+          
+          .pwa-install-button {
+            flex: 1;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default PWAInstallPrompt;

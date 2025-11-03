@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "automatizacion-tickets-472721",
+  "private_key_id": "fe5019538d2d0467daa3e711adbc7a73c2e6fa78",
+  "private_key": fe5019538d2d0467daa3e711adbc7a73c2e6fa78\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQChbasKIb15Lwg6\n9Z7PU7lzevF3nFuM2sbknk3lnaTDNK4ndol64Rq4Wsyaxmu6SMgDmIV8mD7NzcB6\nutgplweOpPLgFKV/xquealcuU7Bthta869yZlbh9yUqegfKLhNpvDpnD5SGenDIn\nNjTkIi9I6dC2D/FlEav3Z07yTItk+rdh43aedKeBMZpP19rWcz4WGMU0AI1tjzmO\ns0c7RzOgfpkuNbJP7eSUVAE1HVM2iN/G+rmbL03eNwVmgx2Y7hxmSc7WDKyb8n6B\nD+KZtHlU+u5uFw0WIKtifX2b3FKAwa+vz1N0momTRCQHlVBzq07lmE9MVCRc3ssr\nr7yw4GOjAgMBAAECggEABtsxEgeX1A9O0q4+9gBQ1ppIqjNeYg+itfART+jPqCjT\nIsLymOD5sQ3ONd6qkalosVpnhQC0XipYe/32k2GiRQk1dZX653/pJxvOIx4T1rsM\n4M5FutI0mUcU38GWKx3T5zagCkVvlZx9ttOjEHNxPbAMmMb5kjjbbHEbVcgxfXLl\nVJiuyhLd7uFA6KUGBu45Ct9EB8GLsLJl05OxQDfuIhSD5biTaoz6oZLrGUVanjqb\n+qu1uPBY36lptJReyBfmIChXSBqOz2DaoqCL+SNrPPQYeo0zl5NEeonyvlW3vXRF\nw8FDNsxuhD8mjuAFW4Lo/WaNP/+YoclcASzmph8OkQKBgQDPBM84IxUcbmWcbzql\nzSd27x8ykp5hKvwc9Zp/BRYDvqUBrmboWerY++fTZcLhcso41Q35R4Sv7x2kgb+l\nnMhNZu5OarVi6IOEw/qdUOwonuK2y7fZrkAb1842hFOfkqZg8E/bgSTXmvp5V3J0\ny1rleiowIo5R06gbl09Aqlw80wKBgQDHn29Cab8ZmuVlH6qG8LeGHs6hqmO9x/hG\n8+p9obwrDYW3e7exEkGpFw+7kK4ChMUd7dxYKBDnyRbFARVhl+3ez6x8vt1vUp6R\nrPi0XiErkSNCkLJrwhz6+yvfL2dmEqnvDNe3lsk4sLgkLcK6OSSiOpcI5tUT2In8\nAQC2m8+78QKBgDULvXFcA/fSDfVkxvlfNUKTiUHzMeQiGJHvGRR9ICP7gNqKbtIQ\n4E2TVtbjV2lfeZPQfBEpE0XllonluU7derHisyOi0jGy9Khbc2dGKg1KkTtXvhdo\nQAMibDOp+qeD82AZk8ziLaeVjaL0Fl75EKSGhjLpV+B9xLC1N9iRDquDAoGAaJ0E\nKJDUZi3Hs+QRcOArvWzdqtlppeZrFXv0Ulx1CTbv8YUzced4Y43DX+9lUcqUpqel\nxslQerfmZ922f8uoDBFXepRn5VQt53f3aka+KV/JU7QS3OgAWgNRLYhhLpvvVGit\nj/fEgiISjlsw5njV2vLLfg3CcsETJu67mfczuXECgYBwFk/R1kAhZlL6WjeNuVC5\nBolGE1Q0CBaZRQXVsFpP/ixLCfIOifGE8SGbUw0RcRDeOA/nKwaw+TIop2rmnnAn\nxsiI4pouHncWJDAvnRdRfuMNIt3GXhWFS270A40r9CdXrWEJEOtglZLxFhSx69pf\nBSdivMquoH12IRgryeuyKA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "nap-sheets-service@automatizacion-tickets-472721.iam.gserviceaccount.com",
+  "client_id": "114889034917247818648",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nap-sheets-service%40automatizacion-tickets-472721.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
