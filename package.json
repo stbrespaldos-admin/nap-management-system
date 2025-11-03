@@ -5,7 +5,7 @@
   "main": "server-minimal.js",
   "scripts": {
     "start": "node server-minimal.js",
-    "build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && node server-sheets.js",
     "client": "cd frontend && npm start",
